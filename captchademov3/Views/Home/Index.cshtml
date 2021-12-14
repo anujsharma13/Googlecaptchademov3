@@ -1,0 +1,37 @@
+﻿@model captchademov3.Models.Student
+<html>
+<head>
+    <title>reCAPTCHA demo: Explicit render after an onload callback</title>
+    
+</head>
+<body>
+    <div>
+        <form method="post" asp-action="Result" asp-controller="Home">
+            <input asp-for="@Model.Name" type="text" placeholder="Name" />
+            <br /><br />
+            <input asp-for="@Model.id" type="text" placeholder="Id" />
+            <br /><br />
+            <div id="divcaptch"></div>
+            <input id="txtcaptcha" type="text" style="display:none" />
+            <br />
+            <br />
+            <input asp-for="@Model.token" hidden id="tokenop"/>
+            <h1 id="l1"> label</h1>
+            <input type="submit" value="submit" />
+        </form>
+    </div>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LezVY0dAAAAAOOcEyPAAiUjJXU_wJS3lDr_0Q5v"></script>
+    <script>
+        let label = document.getElementById('l1');
+        let tokenop = document.getElementById('tokenop');
+        grecaptcha.ready(function () {
+            grecaptcha.execute('6LezVY0dAAAAAOOcEyPAAiUjJXU_wJS3lDr_0Q5v', { action: 'submit' }).then(function (token) {
+                console.log(token);
+                label.innerHTML = token.toString();
+                tokenop.setAttribute('value', token.toString());
+                console.log("output" + tokenop.value);
+            });
+        });
+    </script>
+</body>
+</html>
